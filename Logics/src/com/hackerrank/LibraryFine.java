@@ -10,7 +10,7 @@ public class LibraryFine {
 			int months = m1 - m2;
 			if ((months == 0)) {
 				int dates = d1 - d2;
-				if (!(dates <= 0)) {
+				if ((dates <= 0)) {
 					System.out.println("0");
 				} else {
 					System.out.println(dates * 15);
