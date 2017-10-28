@@ -4,58 +4,35 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-
 public class FlatLandSPaceStations {
 
 	public static void calculateMinimumDistance(ArrayList<Integer> spaceStations, int number) {
 
 		Collections.sort(spaceStations);
-		int firstSpaceStation = spaceStations.get(0);
-		int lastSpaceStation = spaceStations.get(spaceStations.size()-1);
-		int max = firstSpaceStation > (number-1)-lastSpaceStation ? firstSpaceStation : (number-1)-lastSpaceStation;
-		for (int i = firstSpaceStation+1; i < lastSpaceStation-1; i++) {
-			if(lastSpaceStation-firstSpaceStation<max)
-				break;
-			boolean flag = false;
-			int j, k;
-			System.out.println("sp" + i);
-			for (j = i, k = i; k >= 0 && j < number; j++, k--) {
-				if (spaceStations.contains(j)) {
-					max = max < (j - i) ? (j - i) : max;
-					System.out.println("max from right" + max);
-					flag = true;
-					break;
-				} else if (spaceStations.contains(k)) {
-					max = max < (i - k) ? (i - k) : max;
-					System.out.println("max from left" + max);
-					flag = true;
-					break;
-				}
-			}
+		System.out.println(spaceStations);
+		int firstStation = spaceStations.get(0), lastStation = spaceStations.get(spaceStations.size() - 1);
+		int leftStation = 0, rightStation = 0;
+		int max = firstStation > number - 1 - lastStation ? firstStation : number - 1 - lastStation;
+		//if first and last are close to each other, one of those is max
+		if (lastStation - firstStation < max) {
+			System.out.println(max);
+			return;
+		}
+		// iterate through space stations and find max by calculating min distance for each station
+		for (int i = 1; i < spaceStations.size(); i++) {
 
-			if (!flag) {
-				while (k >= firstSpaceStation) {
-					if (spaceStations.contains(k)) {
-						max = max < (i - k) ? (i - k) : max;
-						System.out.println("max from left1" + max);
-						flag = true;
-						break;
-					}
-					k--;
-				}
+			leftStation = spaceStations.get(i - 1);
+			rightStation = spaceStations.get(i);
+			//to find min for each stattion between left and right
 
-				while (j < lastSpaceStation && !flag) {
-					if (spaceStations.contains(j)) {
-						max = max < (j - i) ? (j - i) : max;
-						System.out.println("max from right1" + max);
-						flag = true;
-						break;
-					}
-					j++;
-				}
+			/*for (int k = leftStation + 1; k < rightStation; k++) {
 
-			}
+				max = Math.max(max, Math.min(k - leftStation, rightStation - k));
+
+			}*/
+			
+			//It is OK if calculated for the middle one alone.
+			max=(int)Math.max(max, Math.floor(rightStation-leftStation)/2);
 
 		}
 		System.out.println(max);
