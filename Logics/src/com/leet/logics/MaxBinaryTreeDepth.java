@@ -17,7 +17,7 @@ public class MaxBinaryTreeDepth {
 		else{
 			return depth;
 		}
-		root
+		
 		 
 		 
 		 return 0;
